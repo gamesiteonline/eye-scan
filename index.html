@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>CyberEye HUD – Reactive Biometric Scan</title>
+<meta name="theme-color" content="#050510">
+<meta name="description" content="High-fidelity cyberpunk eye-scan HUD that activates when you look at the camera. Real-time iris tracking, holographic frames, particles.">
+<link rel="manifest" href="./manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+
+<!-- Importmap for MediaPipe -->
+<script type="importmap">
+{
+  "imports": {
+    "@mediapipe/tasks-vision": "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs"
+  }
+}
+</script>
+</head>
+<body>
+<div id="app">
+  <video id="cam" autoplay playsinline muted></video>
+  <canvas id="bg-canvas"></canvas>
+  <canvas id="hud-canvas"></canvas>
+  <canvas id="particle-canvas"></canvas>
+  <div id="scanlines"></div>
+  <div id="vignette"></div>
+  <div id="flash"></div>
+
+  <div id="ui-layer">
+    <div class="top-bar">
+      <div class="brand">CYBER<span>EYE</span> // HUD v2.4</div>
+      <div class="status"><span class="status-dot"></span><span id="top-status">● INITIALIZING</span></div>
+    </div>
+
+    <div id="center-reticle">
+      <div class="reticle-ring"></div>
+      <div class="reticle-ring inner"></div>
+      <div class="reticle-cross"></div>
+      <div class="reticle-cross v"></div>
+    </div>
+
+    <!-- Eye HUD anchors -->
+    <div id="eye-left" class="eye-hud" style="display:none">
+      <div class="eye-frame"><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div><div class="eye-line"></div></div>
+    </div>
+    <div id="eye-right" class="eye-hud" style="display:none">
+      <div class="eye-frame magenta"><div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div><div class="eye-line"></div></div>
+    </div>
+
+    <!-- Data panels -->
+    <div id="panel-left" class="panel">
+      <div class="panel-header"><b>FILE 010-B // IRIS_DATA</b><span>● REC</span></div>
+      <div id="hex-left" class="hex">--</div>
+      <canvas id="wave-left" class="wave"></canvas>
+      <div id="meta-left" class="meta">CONF --% • GAZE --:--</div>
+    </div>
+
+    <div id="panel-right" class="panel magenta">
+      <div class="panel-header"><b>SCAN // BIOMETRIC</b><span>● LIVE</span></div>
+      <div id="hex-right" class="hex">--</div>
+      <canvas id="wave-right" class="wave"></canvas>
+      <div id="meta-right" class="meta">OPEN --% • DIST --</div>
+    </div>
+
+    <div id="bottom-bar">
+      <div class="progress-wrap">
+        <div class="progress-label"><span id="progress-label">AWAITING SUBJECT</span><span style="opacity:0.4">|</span><span>LOADING…</span></div>
+        <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+      </div>
+      <div id="progress-num" class="progress-num glitch" data-text="0%">0%</div>
+    </div>
+
+    <div id="access-granted">
+      <h1><span>ACCESS</span> GRANTED</h1>
+      <p>BIOMETRIC VERIFIED • IDENTITY LOCKED • WELCOME</p>
+      <p style="margin-top:22px;font-size:10px;opacity:0.5">Press ESC or tap to rescan</p>
+    </div>
+  </div>
+
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>INITIALIZING MEDIAPIPE • LOADING FACE MESH</p>
+  </div>
+
+  <div id="start-screen">
+    <div class="logo"><span class="c">CYBER</span><span class="e">EYE</span></div>
+    <div class="logo-sub">REACTIVE BIOMETRIC SCAN INTERFACE</div>
+    <div class="start-card">
+      <p>► High-fidelity holographic eye-scan that activates only when you look directly at the camera.</p>
+      <p>► Uses MediaPipe Face Landmarker (478 points) + iris tracking at 30 fps, fully client-side.</p>
+      <p>► Cinematic HUD: cyan/magenta glow, orbiting particles, scan-lines, glitch counter 0→100, and energy burst lock.</p>
+      <p style="opacity:0.6;font-size:11px;letter-spacing:0.08em">Requires camera permission. Best in moderate lighting, 30–60 cm distance, centered face. Works on desktop & mobile.</p>
+      <button id="btn-start" class="btn">▶ INITIATE SCAN SEQUENCE</button>
+      <div class="hint">ESC to reset • Allow front camera • PWA installable</div>
+    </div>
+    <div style="margin-top:18px;font-size:10px;opacity:0.35;letter-spacing:0.18em">NO DATA LEAVES YOUR DEVICE • 100% CLIENT-SIDE</div>
+  </div>
+
+  <div id="error-overlay">
+    <div class="error-card">
+      <h3 id="error-title">ERROR</h3>
+      <p id="error-msg">Something went wrong.</p>
+      <button id="btn-retry" class="btn" style="border-color:#FF0055;color:#FF0055;box-shadow:0 0 20px rgba(255,0,85,0.4)">↻ RETRY</button>
+      <div class="hint">Check browser permissions: Chrome → lock icon → Camera Allow. iOS Safari → AA → Website Settings.</div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/main.js"></script>
+</body>
+</html>

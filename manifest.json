@@ -1,0 +1,24 @@
+{
+  "name": "CyberEye HUD – Biometric Scan",
+  "short_name": "CyberEye",
+  "description": "Reactive biometric eye-scan HUD with real-time iris tracking",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050510",
+  "theme_color": "#050510",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050510'/><circle cx='50' cy='50' r='26' fill='none' stroke='%2300F0FF' stroke-width='4'/><circle cx='50' cy='50' r='10' fill='%2300F0FF'/><path d='M20 20 L35 20 L20 35 Z' fill='%2300F0FF'/><path d='M80 20 L80 35 L65 20 Z' fill='%23FF0055'/><path d='M20 80 L20 65 L35 80 Z' fill='%23FF0055'/><path d='M80 80 L65 80 L80 65 Z' fill='%2300F0FF'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='90' fill='%23050510'/><circle cx='256' cy='256' r='130' fill='none' stroke='%2300F0FF' stroke-width='18'/><circle cx='256' cy='256' r='48' fill='%2300F0FF'/><g fill='%2300F0FF'><path d='M80 80 L160 80 L80 160 Z'/></g><g fill='%23FF0055'><path d='M432 80 L432 160 L352 80 Z'/><path d='M80 432 L80 352 L160 432 Z'/></g><g fill='%2300F0FF'><path d='M432 432 L352 432 L432 352 Z'/></g></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
